@@ -1,28 +1,54 @@
 ﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace FirstApplicationUI.Models
 {
-    public class LoginResponse
+    public class LoginVm
     {
-        [JsonProperty("token")]
-        public string Token { get; set; }
-
-        [JsonProperty("user")]
-        public UserDto User { get; set; }
-    }
-
-    public class UserDto
-    {
-        [JsonProperty("userId")]
-        public int UserId { get; set; }
-
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("email")]
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
-        [JsonProperty("roleId")]
+        [Required]
+        public string Password { get; set; }
+    }
+
+    public class ForgotPasswordVm
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+    }
+
+    public class ResetPasswordVm
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Required]
+        public string Token { get; set; }
+
+        [Required]
+        [MinLength(6)]
+        public string NewPassword { get; set; }
+
+        [Required]
+        [Compare("NewPassword", ErrorMessage = "Passwords do not match")]
+        public string ConfirmPassword { get; set; }
+    }
+
+    public class LoginResponse
+    {
+        public string Token { get; set; }
+        public UserVm User { get; set; }
+    }
+
+    public class UserVm
+    {
+        public int UserId { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
         public int RoleId { get; set; }
     }
 

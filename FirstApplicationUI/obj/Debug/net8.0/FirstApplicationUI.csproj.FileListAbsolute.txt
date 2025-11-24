@@ -34,3 +34,4 @@ C:\Users\ESHOP\Desktop\dotnetwork\FirstApplicationUI\FirstApplicationUI\obj\Debu
 C:\Users\ESHOP\Desktop\dotnetwork\FirstApplicationUI\FirstApplicationUI\obj\Debug\net8.0\FirstApplicationUI.pdb
 C:\Users\ESHOP\Desktop\dotnetwork\FirstApplicationUI\FirstApplicationUI\obj\Debug\net8.0\FirstApplicationUI.genruntimeconfig.cache
 C:\Users\ESHOP\Desktop\dotnetwork\FirstApplicationUI\FirstApplicationUI\obj\Debug\net8.0\ref\FirstApplicationUI.dll
+C:\Users\ESHOP\Desktop\dotnetwork\FirstApplicationUI\FirstApplicationUI\obj\Debug\net8.0\FirstApplicationUI.sourcelink.json

@@ -1,0 +1,11 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+
+    // Access session
+    var username = Context.Session.GetString("Username");
+    var role = Context.Session.GetString("Role");
+}
+
+<h1>Welcome, Admin!</h1>
+<p>Hello @username</p>
+<p>Your RoleId: @role</p>

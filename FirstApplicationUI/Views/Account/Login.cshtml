@@ -1,0 +1,58 @@
+﻿@model LoginVm
+@{
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+    ViewData["Title"] = "Login";
+}
+
+<div class="container mt-5" style="max-width:700px;">
+    <div class="card shadow">
+        <div class="row g-0">
+
+            <!-- LEFT: Image Section -->
+            <div class="col-md-5 d-none d-md-block">
+                <img src="~/images/architecture-2256489.jpg"
+                     class="img-fluid h-100 w-100"
+                     style="object-fit: cover; border-radius: 6px 0 0 6px;" />
+            </div>
+
+            <!-- RIGHT: Login Form -->
+            <div class="col-md-7 p-4">
+                <h3 class="text-center mb-4">Login</h3>
+
+                <form asp-action="Login" method="post">
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input asp-for="Email" class="form-control" placeholder="Enter email" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Enter password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100 mt-3">Login</button>
+
+                    @if (!ViewData.ModelState.IsValid)
+                    {
+                        <div class="text-danger mt-2">
+                            @ViewData.ModelState[string.Empty]?.Errors.FirstOrDefault()?.ErrorMessage
+                        </div>
+                    }
+
+                    <div class="text-center mt-3">
+                        <a asp-action="ForgotPassword" asp-controller="Account">Forgot Password?</a>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

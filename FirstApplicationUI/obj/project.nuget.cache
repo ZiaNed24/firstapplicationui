@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "DrZyoySAhKQ=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\ESHOP\\Desktop\\dotnetwork\\FirstApplicationUI\\FirstApplicationUI\\FirstApplicationUI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\ESHOP\\.nuget\\packages\\newtonsoft.json\\13.0.4\\newtonsoft.json.13.0.4.nupkg.sha512"
+  ],
+  "logs": []
+}

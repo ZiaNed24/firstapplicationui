@@ -1,11 +1,112 @@
-﻿@{
+﻿@model FirstApplicationUI.Models.AdminDashboardViewModel
+@{
     ViewData["Title"] = "Admin Dashboard";
-
-    // Access session
-    var username = Context.Session.GetString("Username");
-    var role = Context.Session.GetString("Role");
 }
 
-<h1>Welcome, Admin!</h1>
-<p>Hello @username</p>
-<p>Your RoleId: @role</p>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css" />
+
+<h2>Welcome, Admin!</h2>
+<h5>Hello, @Model.Username</h5>
+<hr />
+
+<h4>Employees List</h4>
+<table id="employeesTable" class="display table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Job</th>
+            <th>Department</th>
+            <th>Manager</th>
+            <th>Salary</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var emp in Model.Employees)
+        {
+            <tr>
+                <td>@emp.EmployeeId</td>
+                <td>@(string.Join(" ", emp.FirstName, emp.LastName))</td>
+                <td>@emp.Email</td>
+                <td>@(string.IsNullOrWhiteSpace(emp.JobTitle) ? "N/A" : emp.JobTitle)</td>
+                <td>@(string.IsNullOrWhiteSpace(emp.DepartmentName) ? "N/A" : emp.DepartmentName)</td>
+                <td>@(string.IsNullOrWhiteSpace(emp.ManagerName) ? "N/A" : emp.ManagerName)</td>
+                <td>@(emp.Salary.HasValue? emp.Salary.Value.ToString("N0"):"0")</td>
+                <td>
+                    <a class="btn btn-sm btn-primary mb-1" href="/Employee/Edit/@emp.EmployeeId">Edit</a>
+                    <a class="btn btn-sm btn-danger mb-1" href="/Employee/Delete/@emp.EmployeeId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<hr />
+<div class="row g-4">
+    <div class="col-md-6">
+        <h5>Employees per Department</h5>
+        <canvas id="deptChart"></canvas>
+    </div>
+    <div class="col-md-6">
+        <h5>Salary Distribution</h5>
+        <canvas id="salaryChart"></canvas>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // ---------------- DataTables Export ----------------
+    $(document).ready(function() {
+        $('#employeesTable').DataTable({
+            dom: 'Bfrtip',
+            buttons: ['excelHtml5', 'pdfHtml5']
+        });
+    });
+
+    // ---------------- Charts ----------------
+    const employees = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(Model.Employees));
+
+    // Employees per Department
+    const deptCounts = {};
+    employees.forEach(e => {
+        const dept = e.departmentName || "N/A";
+        deptCounts[dept] = (deptCounts[dept] || 0) + 1;
+    });
+
+    const ctxDept = document.getElementById('deptChart').getContext('2d');
+    new Chart(ctxDept, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(deptCounts),
+            datasets: [{
+                label: 'Employees per Department',
+                data: Object.values(deptCounts),
+                backgroundColor: 'rgba(54, 162, 235, 0.7)'
+            }]
+        },
+        options: { responsive: true }
+    });
+
+    // Salary Distribution
+    const salaryLabels = employees.map(e => (e.firstName || "") + " " + (e.lastName || ""));
+    const salaryData = employees.map(e => e.salary || 0);
+    const colors = salaryLabels.map(_ => `hsl(${Math.random()*360},70%,60%)`);
+
+    const ctxSalary = document.getElementById('salaryChart').getContext('2d');
+    new Chart(ctxSalary, {
+        type: 'pie',
+        data: { labels: salaryLabels, datasets: [{ data: salaryData, backgroundColor: colors }] },
+        options: { responsive: true }
+    });
+</script>

@@ -51,5 +51,35 @@ namespace FirstApplicationUI.Models
         public string Email { get; set; }
         public int RoleId { get; set; }
     }
+    public class EmployeeResponseDto
+    {
+        public int EmployeeId { get; set; }
+
+        public string? FirstName { get; set; }
+
+        public string LastName { get; set; } = null!;
+
+        public string Email { get; set; } = null!;
+
+        public string? PhoneNumber { get; set; }
+
+        public DateOnly HireDate { get; set; }
+
+        public string? JobTitle { get; set; }
+
+        public string? DepartmentName { get; set; }
+
+        public string? ManagerName { get; set; }
+
+        // Salary field
+        public decimal? Salary { get; set; }
+    }
+
+    public class AdminDashboardViewModel
+    {
+        public string? Username { get; set; }
+
+        public IEnumerable<EmployeeResponseDto>? Employees { get; set; }
+    }
 
 }

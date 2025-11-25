@@ -1,0 +1,32 @@
+﻿@model IEnumerable<EmployeeResponseDto>
+
+<h3>Employees List</h3>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Job</th>
+            <th>Department</th>
+            <th>Manager</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var emp in Model)
+        {
+            <tr>
+                <td>@emp.EmployeeId</td>
+                <td>@emp.FirstName @emp.LastName</td>
+                <td>@emp.Email</td>
+                <td>@emp.JobTitle</td>
+                <td>@emp.DepartmentName</td>
+                <td>@emp.ManagerName</td>
+                <td>@emp.Salary</td>
+            </tr>
+        }
+    </tbody>
+</table>

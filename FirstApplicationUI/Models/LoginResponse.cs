@@ -58,7 +58,7 @@ namespace FirstApplicationUI.Models
         public string? FirstName { get; set; }
 
         public string LastName { get; set; } = null!;
-
+        public string EmploymentStatus { get; set; } = null!;
         public string Email { get; set; } = null!;
 
         public string? PhoneNumber { get; set; }
@@ -76,6 +76,12 @@ namespace FirstApplicationUI.Models
     }
 
     public class AdminDashboardViewModel
+    {
+        public string? Username { get; set; }
+
+        public IEnumerable<EmployeeResponseDto>? Employees { get; set; }
+    }
+    public class HRDashboardViewModel
     {
         public string? Username { get; set; }
 
